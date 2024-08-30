@@ -1,9 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt =  require('bcrypt');
+const uuid = require('uuid');
+const jwt = require('jsonwebtoken');
+const db = require('../config/db');
+const userMiddleWare = require('../middleware/users');
+router.post('/sign-up', (req, res, next) => {});
+router.post('/login', (req, res, next) => {});
+router.get('/secret-route', (req, res, next) => {
+    res.send('This is the secret content. Only logged in users can see that!');
+  });
 const mysql = require('mysql2');
 require('dotenv').config();
-const jwt = require('jsonwebtoken');
+
 
 
 
@@ -46,146 +55,6 @@ router.post('/register', async (req, res) =>{
     });
 })
 
-/*router.post('/login', async (req, res) =>{
-    const { username, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const sql =`SELECT (username, password) FROM users WHERE username=?;`
-    db.query(sql, [username], (err,result) =>{
-        if(err){
-            return res.status(500).send(err)
-        }
-        res.status(201).send({
-            message: username,
-            password: password,
-            succes: "reussi",
-            result: result
-        })
-    });
-})*/
-
-/*router.post('/login', async (req, res) => {
-    try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
-    if (!user) {
-    return res.status(401).json({ error: 'Authentication failed' });
-    }
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
-    return res.status(401).json({ error: 'Authentication failed' });
-    }
-    const token = jwt.sign({ userId: user._id }, 'your-secret-key', {
-    expiresIn: '1h',
-    });
-    res.status(200).json({ token });
-    } catch (error) {
-    res.status(500).json({ error: 'Login failed' });
-    }
-    });
-*/
-
-/*router.post('/signin', async (req, res) => {
-    const { username, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-  
-    const user = users.find(user => user.username === username);
-  
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ message: 'Invalid username or password' });
-    }
-  
-    res.status(200).json({ message: 'Signin successful', user: { username: user.username } });
-  });
-*/
-
-/*const users = [];
-
-router.post('/signin', async (req, res) => {
-    const { username, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const sql =`SELECT (username, password) FROM users WHERE username=?;`;
-
-
-    let user;
-      
-    user = user.find(users => users.username === username);
-      
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-          return res.status(401).json({ message: 'Invalid username or password' });
-        }
-      
-    res.status(200).json({ message: 'Signin successful', user: { username: user.username } });
-});*/
-/*router.post('/signin', async (req, res) =>{
-    try {
-            const { username, password } = req.body
-            const [user.username] = await pool.query("select * from users where email = ?", [username])
-            if (!user[0]) return res.json({ error: "Invalid email!" })
-
-            const { password: hash, id, name } = user[0]
-
-            const check = await bcrypt.compare(password, hash)
-
-            if (check) {
-                const accessToken = jwt.sign({ userId: id }, '3812932sjad34&*@', { expiresIn: '1h' });
-                return res.json({
-                    accessToken,
-                    data: {
-                        name,
-                        email
-                    }
-                })
-            }
-            return res.json({ error: "Wrong password!" })
-
-        } catch (error) {
-            console.log(error)
-            res.json({
-                error: error.message
-            })
-        }
-})*/
-/*router.post('/login', async (req, res) => {
-    try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
-    if (!user) {
-    return res.status(401).json({ error: 'Authentication failed' });
-    }
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
-    return res.status(401).json({ error: 'Authentication failed' });
-    }
-    const token = jwt.sign({ userId: user._id }, 'your-secret-key', {
-    expiresIn: '1h',
-    });
-    res.status(200).json({ token });
-    } catch (error) {
-    res.status(500).json({ error: 'Login failed' });
-    }
-    })
- */
-
-/*const storedHashedPassword = 'hashed_password_from_database';
-const userInputPassword = 'password_attempt_from_user';
-
-bcrypt.compare(userInputPassword, storedHashedPassword, (err, result) => {
-    if (err) {
-        // Handle error
-        console.error('Error comparing passwords:', err);
-        return;
-    }
-
-if (result) {
-    // Passwords match, authentication successful
-    console.log('Passwords match! User authenticated.');
-} else {
-    // Passwords don't match, authentication failed
-    console.log('Passwords do not match! Authentication failed.');
-}
-});*/
 router.post('/login', async (req, res) =>{
 
     let connexionDatabase = test();
@@ -221,14 +90,6 @@ router.post('/login', async (req, res) =>{
             }
         });
     
-
-    /*
-    res.status(201).send({
-        succes: "ok",
-        motdepasseindiqué: password,
-        aaaa: Userpassword
-    })
-       */ 
 
 
     })

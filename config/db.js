@@ -8,5 +8,5 @@ const connexionDatabase = () => {
     })   
     return connection;
 }
-
+connection.connect();
 module.exports = connexionDatabase;
